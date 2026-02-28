@@ -2,19 +2,24 @@
 <html lang="pt-BR">
 <head>
 
-  <!-- ════ 1. Google Analytics 4 — must be first ════ -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRPM8MDM7P"></script>
+  <!-- ════ 1. Google tag — GA4 + Google Ads (tag unificada) ════ -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17983381794"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+
+    // GA4
     gtag('config', 'G-JRPM8MDM7P', {
       send_page_view: true,
       allow_google_signals: true,
       allow_ad_personalization_signals: true
     });
 
-    // Scroll depth tracking
+    // Google Ads
+    gtag('config', 'AW-17983381794');
+
+    // ── Scroll depth ──
     var scrollDepths = [25, 50, 75, 90, 100];
     var scrollFired = {};
     window.addEventListener('scroll', function() {
@@ -29,7 +34,7 @@
       });
     }, { passive: true });
 
-    // Time on page
+    // ── Tempo na página ──
     var timeOnPage = [30, 60, 120, 180];
     timeOnPage.forEach(function(sec) {
       setTimeout(function() {
@@ -37,7 +42,7 @@
       }, sec * 1000);
     });
 
-    // Exit intent
+    // ── Exit intent ──
     document.addEventListener('mouseleave', function(e) {
       if (e.clientY < 5) {
         gtag('event', 'exit_intent', { page: window.location.pathname });
@@ -121,8 +126,6 @@
   </script>
 
   
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRPM8MDM7P"></script>
   
 
   <!-- ════ 4. Schema.org ════ -->
@@ -333,8 +336,22 @@
     /* ── WhatsApp ── */
     var WA_NUMBER = "5545988110440";
     function openWA(msg, ctx) {
+      // Meta Pixel
       try { fbq('track', 'Lead'); fbq('track', 'Contact'); } catch(e) {}
-      try { gtag('event', 'generate_lead', {method:'whatsapp', context:ctx}); gtag('event', 'whatsapp_click', {context:ctx}); } catch(e) {}
+      // GA4
+      try {
+        gtag('event', 'generate_lead', {method: 'whatsapp', context: ctx});
+        gtag('event', 'whatsapp_click', {context: ctx});
+      } catch(e) {}
+      // Google Ads — conversão de lead
+      try {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-17983381794/whatsapp_lead',
+          'value': 1.0,
+          'currency': 'BRL',
+          'event_callback': function() {}
+        });
+      } catch(e) {}
       window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg), "_blank", "noopener,noreferrer");
     }
 
