@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Auxílio-doença negado ou cessado | Advogadas Prev</title>
+  <meta name="description" content="Teve o auxílio-doença negado ou cessado após perícia do INSS? Entenda critérios e solicite orientação jurídica com análise individual da documentação." />
+
+  <!-- =========================
+       META PIXEL (substitua META_PIXEL_ID)
+       ========================= -->
+  <script>
+    (function(f,b,e,v,n,t,s){
+      if(f.fbq) return; n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq) f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0';
+      n.queue=[]; t=b.createElement(e); t.async=!0;
+      t.src=v; s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)
+    })(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', 'META_PIXEL_ID'); // <-- TROQUE AQUI
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=META_PIXEL_ID&ev=PageView&noscript=1" />
+  </noscript>
+
+  <!-- =========================
+       GOOGLE TAG (GA4) (substitua GA4_ID)
+       Se você tiver Google Ads, você pode usar gtag também para conversões.
+       ========================= -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA4_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    gtag('js', new Date());
+    gtag('config', 'GA4_ID'); // <-- TROQUE AQUI
+
+    // Se você usar Google Ads + gtag:
+    // gtag('config', 'AW_CONVERSION_ID'); // <-- EX.: AW-123456789 (descomente e troque)
+  </script>
+
+  <!-- Tailwind CDN (bom para protótipo; depois podemos trocar por build local) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              950: "#071427",
+              900: "#0B1F3B",
+              800: "#0F2B52",
+              700: "#163A6B",
+            },
+            ink: "#0B1220",
+            fog: "#F2F4F7",
+            slate: "#6B7280",
+            wa: "#25D366",
+            icon: "#7CC4FF" // ícones mais vibrantes (azul claro)
+          },
+          boxShadow: { soft: "0 10px 30px rgba(0,0,0,0.18)" }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .container-narrow { max-width: 1040px; }
+  </style>
+
+  <!-- =========================
+       EVENTOS (WhatsApp click)
+       - Meta: Lead + Contact
+       - GA4: generate_lead + custom event
+       - Google Ads: conversion (opcional)
+       ========================= -->
+  <script>
+    // CONFIG
+    const WHATSAPP_NUMBER = "SEU_NUMERO_WHATSAPP"; // ex: 5545999999999
+
+    // Se usar Google Ads conversão por clique no WhatsApp:
+    const USE_GOOGLE_ADS_CONVERSION = false; // mude para true se configurar abaixo
+    const AW_SEND_TO = "AW_CONVERSION_ID/AW_CONVERSION_LABEL"; // ex: "AW-123456789/AbCDeFGhijkLmNoP"
+
+    function trackWhatsAppClick(extra = {}) {
+      try {
+        if (window.fbq) {
+          fbq('track', 'Lead');
+          fbq('track', 'Contact');
+        }
+      } catch (e) {}
+
+      try {
+        if (window.gtag) {
+          gtag('event', 'generate_lead', {
+            method: 'whatsapp',
+            ...extra
+          });
+          gtag('event', 'whatsapp_click', {
+            method: 'whatsapp',
+            ...extra
+          });
+
+          if (USE_GOOGLE_ADS_CONVERSION) {
+            gtag('event', 'conversion', { 'send_to': AW_SEND_TO });
+          }
+        }
+      } catch (e) {}
+    }
+
+    function openWhatsApp(message, extra = {}) {
+      trackWhatsAppClick(extra);
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Intercepta cliques em qualquer elemento com data-wa-message
+      document.querySelectorAll("[data-wa-message]").forEach((el) => {
+        el.addEventListener("click", (ev) => {
+          ev.preventDefault();
+          const msg = el.getAttribute("data-wa-message") || "Olá! Gostaria de orientação.";
+          const ctx = el.getAttribute("data-wa-context") || "unknown";
+          openWhatsApp(msg, { context: ctx });
+        });
+      });
+    });
+  </script>
+</head>
+
+<body class="bg-navy-950 text-white antialiased">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-navy-950/85 backdrop-blur border-b border-white/10">
+    <div class="mx-auto container-narrow px-4 py-3 flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shadow-soft">
+          <span class="font-semibold tracking-wide">AP</span>
+        </div>
+        <div class="leading-tight">
+          <div class="font-semibold tracking-wide">ADVOGADAS <span class="text-white/80">PREV</span></div>
+          <div class="text-xs text-white/70">Direito Previdenciário</div>
+        </div>
+      </div>
+
+      <!-- CTA header -->
+      <a href="#"
+         data-wa-context="header_cta"
+         data-wa-message="Olá! Tive meu auxílio-doença negado ou cessado após perícia do INSS e gostaria de orientação."
+         class="hidden sm:inline-flex items-center gap-2 rounded-2xl bg-wa px-4 py-2 font-semibold text-ink shadow-soft hover:opacity-95 transition"
+         aria-label="Falar no WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12a8 8 0 0 1-8 8H7l-4 2 1.5-4.5A8 8 0 1 1 21 12Z"/>
+        </svg>
+        WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="relative">
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-white/6 blur-2xl"></div>
+        <div class="absolute top-40 -left-24 h-72 w-72 rounded-full bg-white/6 blur-2xl"></div>
+      </div>
+
+      <div class="relative mx-auto container-narrow px-4 py-10 sm:py-14">
+        <div class="grid gap-8 lg:grid-cols-12 items-center">
+          <!-- Copy -->
+          <div class="lg:col-span-7">
+            <p class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/80">
+              <span class="h-2 w-2 rounded-full bg-white/70"></span>
+              Atendimento online no Paraná
+            </p>
+
+            <h1 class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight">
+              Teve o <span class="text-white/90">auxílio-doença</span> negado ou cessado após perícia do INSS?
+            </h1>
+
+            <p class="mt-4 text-base sm:text-lg text-white/80 leading-relaxed">
+              Se você ainda enfrenta limitações para o trabalho, é importante compreender os critérios utilizados na decisão
+              e avaliar sua situação de forma <span class="text-white/90 font-medium">técnica e individual</span>.
+            </p>
+
+            <!-- CTA primary (único, sem botão "ver opções") -->
+            <div class="mt-6 flex flex-col sm:flex-row gap-3">
+              <a href="#"
+                 data-wa-context="hero_cta"
+                 data-wa-message="Olá! Tive meu auxílio-doença negado ou cessado após perícia do INSS e gostaria de solicitar orientação."
+                 class="inline-flex items-center justify-center gap-2 rounded-2xl bg-wa px-5 py-3 font-semibold text-ink shadow-soft hover:opacity-95 transition">
+                <span>Solicitar orientação pelo WhatsApp</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h12"/><path d="M13 6l6 6-6 6"/>
+                </svg>
+              </a>
+            </div>
+
+            <!-- Trust microcopy -->
+            <div class="mt-5 grid gap-2 sm:grid-cols-3 text-sm text-white/80">
+              <div class="flex items-start gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mt-0.5 h-5 w-5 text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+                </svg>
+                Atendimento direto com advogada inscrita na OAB
+              </div>
+              <div class="flex items-start gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mt-0.5 h-5 w-5 text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M7 7h10v10H7z"/><path d="M4 4h16v16H4z" opacity=".35"/>
+                </svg>
+                Foco em Direito Previdenciário
+              </div>
+              <div class="flex items-start gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mt-0.5 h-5 w-5 text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 12l2 2 4-4"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" opacity=".35"/>
+                </svg>
+                Análise individual da documentação
+              </div>
+            </div>
+
+            <p class="mt-4 text-xs text-white/60">
+              A orientação depende da análise individual da documentação médica e do histórico contributivo.
+            </p>
+          </div>
+
+          <!-- Right card -->
+          <div class="lg:col-span-5">
+            <div class="rounded-3xl bg-white/5 border border-white/10 shadow-soft p-5 sm:p-6">
+              <div class="flex items-center gap-3">
+                <div class="h-12 w-12 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h6"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="font-semibold">Checklist rápido</div>
+                  <div class="text-sm text-white/70">Se tiver, ajuda — se não tiver, tudo bem.</div>
+                </div>
+              </div>
+
+              <ul class="mt-5 space-y-3 text-sm text-white/80">
+                <li class="flex gap-2">
+                  <span class="mt-0.5 h-2 w-2 rounded-full bg-white/60"></span>
+                  Laudos/atestados recentes (com limitações funcionais)
+                </li>
+                <li class="flex gap-2">
+                  <span class="mt-0.5 h-2 w-2 rounded-full bg-white/60"></span>
+                  Comunicação do INSS (indeferimento/cessação)
+                </li>
+                <li class="flex gap-2">
+                  <span class="mt-0.5 h-2 w-2 rounded-full bg-white/60"></span>
+                  Profissão e tarefas do trabalho (o que você faz no dia a dia)
+                </li>
+              </ul>
+
+              <!-- Botão para tirar dúvidas (alteração #4) -->
+              <div class="mt-6">
+                <a href="#"
+                   data-wa-context="checklist_doubts"
+                   data-wa-message="Olá! Estou com dúvida sobre quais documentos preciso para avaliar meu caso de auxílio-doença negado/cessado. Você pode me orientar?"
+                   class="inline-flex w-full items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 font-semibold hover:bg-white/10 transition">
+                  Tirar dúvidas pelo WhatsApp
+                </a>
+                <p class="mt-2 text-xs text-white/60">
+                  Você pode chamar mesmo sem os documentos em mãos.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- How it works -->
+        <div class="mt-10 sm:mt-12 grid gap-6 lg:grid-cols-12 items-start">
+          <div class="lg:col-span-5">
+            <h2 class="text-2xl font-semibold">Como funciona o atendimento</h2>
+            <p class="mt-2 text-white/75">
+              Processo simples, com transparência e análise individual. Sem promessas — com critério.
+            </p>
+          </div>
+          <div class="lg:col-span-7">
+            <div class="grid gap-3 sm:grid-cols-3">
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <div class="h-10 w-10 rounded-2xl bg-white/10 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12a8 8 0 0 1-8 8H7l-4 2 1.5-4.5A8 8 0 1 1 21 12Z"/>
+                  </svg>
+                </div>
+                <div class="mt-3 font-semibold">1) Mensagem</div>
+                <div class="mt-1 text-sm text-white/75">Você relata a situação pelo WhatsApp.</div>
+              </div>
+
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <div class="h-10 w-10 rounded-2xl bg-white/10 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <path d="M14 2v6h6"/>
+                  </svg>
+                </div>
+                <div class="mt-3 font-semibold">2) Documentos</div>
+                <div class="mt-1 text-sm text-white/75">Se tiver, você envia (laudos, exames, INSS).</div>
+              </div>
+
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <div class="h-10 w-10 rounded-2xl bg-white/10 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 12l2 2 4-4"/>
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" opacity=".35"/>
+                  </svg>
+                </div>
+                <div class="mt-3 font-semibold">3) Orientação</div>
+                <div class="mt-1 text-sm text-white/75">Encaminhamento conforme seu caso.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical block -->
+        <div class="mt-10 sm:mt-12 rounded-3xl bg-white/5 border border-white/10 p-5 sm:p-6">
+          <h2 class="text-2xl font-semibold">O que o INSS costuma analisar</h2>
+          <p class="mt-2 text-white/75">
+            A decisão costuma considerar incapacidade funcional e adequação da documentação ao seu trabalho e ao quadro clínico.
+          </p>
+
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+              <div class="flex items-center gap-2 font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="8.5" cy="7" r="4"/>
+                </svg>
+                Capacidade funcional
+              </div>
+              <p class="mt-2 text-sm text-white/75">Limitações práticas para as tarefas do trabalho.</p>
+            </div>
+
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+              <div class="flex items-center gap-2 font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 7h18"/><path d="M5 7V5a2 2 0 0 1 2-2h2"/><path d="M19 7V5a2 2 0 0 0-2-2h-2"/>
+                  <path d="M7 7v14"/><path d="M17 7v14"/>
+                </svg>
+                Atividade exercida
+              </div>
+              <p class="mt-2 text-sm text-white/75">A incapacidade é avaliada em relação à sua profissão.</p>
+            </div>
+
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+              <div class="flex items-center gap-2 font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2Z"/>
+                  <path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h6"/>
+                </svg>
+                Laudos e exames
+              </div>
+              <p class="mt-2 text-sm text-white/75">Clareza sobre tratamento e limitações funcionais.</p>
+            </div>
+
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+              <div class="flex items-center gap-2 font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/>
+                  <path d="M5 6h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/>
+                </svg>
+                Histórico contributivo
+              </div>
+              <p class="mt-2 text-sm text-white/75">Qualidade de segurado e carência, quando aplicável.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Credibility -->
+        <div class="mt-10 sm:mt-12 rounded-3xl bg-white/5 border border-white/10 p-5 sm:p-6">
+          <h2 class="text-2xl font-semibold">Quem atende</h2>
+          <div class="mt-4 grid gap-6 lg:grid-cols-12 items-start">
+            <div class="lg:col-span-4">
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <div class="text-sm text-white/70">Advogada responsável</div>
+                <div class="mt-1 text-lg font-semibold">Dra. Isabela Cechet</div>
+                <div class="mt-1 text-sm text-white/80">OAB/PR nº XXXXX</div>
+                <p class="mt-3 text-sm text-white/75">
+                  Atuação na área previdenciária, com foco em benefícios por incapacidade.
+                  Atendimento online para todo o Paraná.
+                </p>
+              </div>
+            </div>
+
+            <div class="lg:col-span-8">
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <div class="font-semibold">Compromisso de atendimento</div>
+                <ul class="mt-3 space-y-2 text-sm text-white/75">
+                  <li class="flex gap-2"><span class="mt-1 h-2 w-2 rounded-full bg-white/60"></span>Linguagem clara, sem promessas de resultado.</li>
+                  <li class="flex gap-2"><span class="mt-1 h-2 w-2 rounded-full bg-white/60"></span>Orientação baseada na documentação e na atividade exercida.</li>
+                  <li class="flex gap-2"><span class="mt-1 h-2 w-2 rounded-full bg-white/60"></span>Encaminhamento conforme viabilidade (administrativo/judicial).</li>
+                </ul>
+
+                <div class="mt-5 flex flex-col sm:flex-row gap-3">
+                  <a href="#"
+                     data-wa-context="who_cta"
+                     data-wa-message="Olá! Gostaria de orientação sobre auxílio-doença negado/cessado após perícia."
+                     class="inline-flex items-center justify-center rounded-2xl bg-wa px-5 py-3 font-semibold text-ink shadow-soft hover:opacity-95 transition">
+                    Falar no WhatsApp
+                  </a>
+                  <a href="politica-de-privacidade.html"
+                     class="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 font-semibold hover:bg-white/10 transition">
+                    Política de privacidade
+                  </a>
+                </div>
+
+                <p class="mt-3 text-xs text-white/60">
+                  A orientação depende da análise individual da documentação médica e do histórico contributivo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Final CTA -->
+        <div class="mt-10 sm:mt-12 mb-14 rounded-3xl bg-white/6 border border-white/10 p-6 shadow-soft">
+          <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+            <div>
+              <div class="text-2xl font-semibold">Vamos definir seu próximo passo com critério.</div>
+              <div class="mt-1 text-white/75">Envie sua situação e receba direcionamento conforme análise individual.</div>
+            </div>
+            <a href="#"
+               data-wa-context="final_cta"
+               data-wa-message="Olá! Quero solicitar orientação sobre meu auxílio-doença negado/cessado após perícia."
+               class="inline-flex items-center justify-center rounded-2xl bg-wa px-6 py-3 font-semibold text-ink shadow-soft hover:opacity-95 transition">
+              Solicitar orientação no WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10">
+    <div class="mx-auto container-narrow px-4 py-8 text-sm text-white/70">
+      <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+        <div><span class="font-semibold text-white/85">Advogadas Prev</span> · Direito Previdenciário</div>
+        <div class="text-xs">Conteúdo informativo. A orientação depende da análise individual do caso e da documentação.</div>
+      </div>
+      <div class="mt-4 text-xs text-white/55">
+        Sugestão: adicione seu e-mail profissional e OAB/UF completos no rodapé.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
