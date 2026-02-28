@@ -3,61 +3,56 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Auxílio-doença negado, cortado ou cessado | Advogadas Prev</title>
-  <meta name="description" content="Teve o auxílio-doença negado ou cortado? Advogada especialista em Direito Previdenciário. Atendimento online para todo o Brasil." />
+  <title>Advogadas Prev | Auxílio-doença</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    :root{
-      --ink:#1A1A2E;--mid:#4A4A5A;--light:#8A8A9A;--line:#E8E8EE;
-      --bg:#F7F8FA;--white:#FFFFFF;--blue:#1B3A6B;--blue-lt:#E8EFF8;
-      --green-wa:#25D366;--max:1080px;
-      --fd:"Playfair Display",serif;--fb:"DM Sans",sans-serif;
-    }
-    body{font-family:var(--fb);background:var(--white);color:var(--ink);line-height:1.6;overflow-x:hidden}
-    .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
-    img{max-width:100%;display:block}
+    /* Reset básico para evitar quebras */
+    *{box-sizing:border-box; margin:0; padding:0}
+    body{font-family:'DM Sans', sans-serif; color:#1A1A2E; line-height:1.6; background:#fff}
     
-    /* Header */
-    header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-    .header-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
-    .logo img{height:45px}
+    .wrap{max-width:1100px; margin:0 auto; padding:0 20px}
+    
+    /* Header Fixo */
+    header{
+      position: sticky; top:0; z-index:999;
+      background:#fff; border-bottom:1px solid #E8E8EE;
+      height:70px; display:flex; align-items:center;
+    }
+    .header-inner{display:flex; justify-content:space-between; align-items:center; width:100%}
+    .logo img{height:40px; width:auto}
 
-    /* Hero */
-    .hero{padding:60px 0;overflow:hidden}
-    .hero-grid{display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center}
-    h1{font-family:var(--fd);font-size:clamp(32px,5vw,48px);line-height:1.1;margin-bottom:20px}
-    h1 em{font-style:normal;color:var(--blue)}
-    .hero-sub{font-size:18px;color:var(--mid);margin-bottom:30px}
-    .btn-wa{display:inline-flex;align-items:center;gap:10px;background:var(--green-wa);color:#fff;padding:16px 32px;border-radius:100px;font-weight:700;text-decoration:none;transition:0.3s}
-    .btn-wa:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(37,211,102,0.2)}
-    .hero-photo img{border-radius:24px;box-shadow:0 30px 60px rgba(0,0,0,0.12)}
+    /* Hero Section - Agora mais simples */
+    .hero{padding:60px 0; background:#F7F8FA; min-height:500px}
+    .hero-container{display:flex; flex-wrap:wrap; gap:40px; align-items:center}
+    .hero-text{flex:1; min-width:300px}
+    .hero-photo{flex:1; min-width:300px}
+    
+    h1{font-family:'Playfair Display', serif; font-size:42px; margin-bottom:20px; color:#1B3A6B}
+    .sub{font-size:18px; margin-bottom:30px; color:#4A4A5A}
 
-    /* Sections */
-    section{padding:80px 0;border-top:1px solid var(--line)}
-    .section-alt{background:var(--bg)}
-    h2{font-family:var(--fd);font-size:32px;margin-bottom:40px;text-align:center}
+    .btn{
+      display:inline-block; background:#25D366; color:#fff; 
+      padding:18px 35px; border-radius:50px; text-decoration:none;
+      font-weight:700; font-size:18px; transition:0.3s;
+    }
+    .btn:hover{transform:translateY(-3px); box-shadow:0 10px 20px rgba(37,211,102,0.2)}
 
-    /* FAQ */
-    .faq-list{max-width:800px;margin:0 auto}
-    .faq-item{background:var(--white);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
-    .faq-btn{width:100%;padding:20px;text-align:left;background:none;border:none;cursor:pointer;font-family:var(--fd);font-size:18px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
-    .faq-answer{padding:0 20px 20px;display:none;color:var(--mid)}
-    .faq-item.open .faq-answer{display:block}
+    .hero-photo img{width:100%; border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.1)}
 
-    /* Footer */
-    footer{padding:40px 0;background:var(--ink);color:var(--white);text-align:center;font-size:14px}
+    /* Seção FAQ */
+    .faq{padding:80px 0; background:#fff}
+    .faq h2{text-align:center; font-family:'Playfair Display', serif; margin-bottom:40px}
+    .faq-item{border:1px solid #E8E8EE; border-radius:10px; margin-bottom:10px; padding:20px}
+    .faq-item h3{font-size:18px; cursor:pointer; display:flex; justify-content:space-between}
 
-    @media(max-width:850px){
-      .hero-grid{grid-template-columns:1fr;text-align:center}
-      .hero-photo{order:-1;max-width:320px;margin:0 auto}
-      .header-inner{justify-content:center}
-      header .btn-wa{display:none}
+    @media(max-width:768px){
+      h1{font-size:32px}
+      .hero-container{flex-direction:column; text-align:center}
+      header .btn{display:none}
     }
   </style>
 </head>
@@ -66,6 +61,62 @@
 <header>
   <div class="wrap">
     <div class="header-inner">
-      <div class="logo"><img src="logo.webp" alt="Advogadas Prev"></div>
-      <a href="#" class="btn-wa" data-wa="header">Falar no WhatsApp</a>
+      <div class="logo"><img src="logo.webp" alt="Logo"></div>
+      <a href="#" class="btn" style="padding:10px 20px; font-size:14px" data-wa="header">WhatsApp</a>
     </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-container">
+        <div class="hero-text">
+          <h1>Auxílio-doença negado ou cortado pelo INSS?</h1>
+          <p class="sub">Recupere seu benefício com orientação jurídica especializada. Atendimento 100% online para todo o Brasil.</p>
+          <a href="#" class="btn" data-wa="hero">Analisar Meu Caso Agora</a>
+        </div>
+        <div class="hero-photo">
+          <img src="foto-isabela.webp" alt="Dra. Isabela Cechet">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="wrap">
+      <h2>Dúvidas Frequentes</h2>
+      <div class="faq-item">
+        <h3>O INSS negou meu pedido. O que fazer?</h3>
+        <p style="margin-top:10px">Você pode entrar com uma ação judicial para realizar uma nova perícia com um médico especialista na sua doença.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Quanto tempo demora o processo?</h3>
+        <p style="margin-top:10px">O tempo varia, mas buscamos sempre a via mais rápida para garantir seus direitos retroativos.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer style="background:#1A1A2E; color:#fff; padding:40px 0; text-align:center">
+  <div class="wrap">
+    <p>Dra. Isabela Cechet - OAB/PR 95.762</p>
+    <p>Advogadas Prev © 2024</p>
+  </div>
+</footer>
+
+<script>
+  // Altere apenas o número abaixo
+  const MEU_WHATSAPP = "5545999998888"; 
+
+  document.querySelectorAll("[data-wa]").forEach(el => {
+    el.addEventListener("click", e => {
+      e.preventDefault();
+      const msg = encodeURIComponent("Olá, Dra. Isabela! Gostaria de falar sobre meu auxílio-doença.");
+      window.open(`https://wa.me/${MEU_WHATSAPP}?text=${msg}`, "_blank");
+    });
+  });
+</script>
+
+</body>
+</html>
