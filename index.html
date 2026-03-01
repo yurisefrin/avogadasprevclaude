@@ -59,10 +59,20 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window,document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '2280500635536915');
+
+    // Inicializa o pixel com ID correto
+    fbq('init', '1496296691912826');
+
+    // PageView — toda visita ao site
     fbq('track', 'PageView');
+
+    // ViewContent — registra que o usuário viu a landing page
+    fbq('track', 'ViewContent', {
+      content_name: 'Landing Page — Auxílio-doença INSS',
+      content_category: 'Direito Previdenciário'
+    });
   </script>
-  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=2280500635536915&ev=PageView&noscript=1"/></noscript>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1496296691912826&ev=PageView&noscript=1"/></noscript>
 
   <!-- ════ 3. Meta tags essenciais ════ -->
   <meta charset="utf-8" />
@@ -336,8 +346,14 @@
     /* ── WhatsApp ── */
     var WA_NUMBER = "5545988110440";
     function openWA(msg, ctx) {
-      // Meta Pixel
-      try { fbq('track', 'Lead'); fbq('track', 'Contact'); } catch(e) {}
+      // Meta Pixel — Lead + Contact com dados do contexto
+      try {
+        fbq('track', 'Lead', {
+          content_name: 'WhatsApp — ' + ctx,
+          content_category: 'Direito Previdenciário'
+        });
+        fbq('track', 'Contact');
+      } catch(e) {}
       // GA4
       try {
         gtag('event', 'generate_lead', {method: 'whatsapp', context: ctx});
